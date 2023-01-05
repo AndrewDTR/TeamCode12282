@@ -19,9 +19,9 @@ public class MotorTest extends LinearOpMode {
         while (opModeIsActive()) {
 
             if (gamepad1.a) {
-                motorLift.setPower(1);
+                motorLift.setPower(-0.5);
             } else if (gamepad1.b) {
-                motorLift.setPower(-0.2);
+                motorLift.setPower(0.5);
             } else {
                 motorLift.setPower(0);
 
