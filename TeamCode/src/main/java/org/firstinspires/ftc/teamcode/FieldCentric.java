@@ -12,14 +12,14 @@ public class FieldCentric extends LinearOpMode {
     public void runOpMode() throws InterruptedException {
 
         // TODO: Make sure that the motors have the names assigned that they do here.
-        DcMotor motorFrontLeft = hardwareMap.dcMotor.get("motorFrontLeft");
-        DcMotor motorBackLeft = hardwareMap.dcMotor.get("motorBackLeft");
-        DcMotor motorFrontRight = hardwareMap.dcMotor.get("motorFrontRight");
-        DcMotor motorBackRight = hardwareMap.dcMotor.get("motorBackRight");
+        DcMotor leftFront = hardwareMap.dcMotor.get("leftFront");
+        DcMotor leftRear = hardwareMap.dcMotor.get("leftRear");
+        DcMotor rightFront = hardwareMap.dcMotor.get("rightFront");
+        DcMotor rightRear = hardwareMap.dcMotor.get("rightRear");
 
         // Reverse the right side motors
-        motorFrontRight.setDirection(DcMotorSimple.Direction.REVERSE);
-        motorBackRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        rightRear.setDirection(DcMotorSimple.Direction.REVERSE);
 
         // Retrieve the IMU from the hardware map
         BNO055IMU imu = hardwareMap.get(BNO055IMU.class, "imu");
@@ -50,10 +50,10 @@ public class FieldCentric extends LinearOpMode {
             double frontRightPower = (rotY - rotX - rx) / denominator;
             double backRightPower = (rotY + rotX - rx) / denominator;
 
-            motorFrontLeft.setPower(frontLeftPower);
-            motorBackLeft.setPower(backLeftPower);
-            motorFrontRight.setPower(frontRightPower);
-            motorBackRight.setPower(backRightPower);
+            leftFront.setPower(frontLeftPower);
+            leftRear.setPower(backLeftPower);
+            rightFront.setPower(frontRightPower);
+            rightRear.setPower(backRightPower);
         }
     }
 }
