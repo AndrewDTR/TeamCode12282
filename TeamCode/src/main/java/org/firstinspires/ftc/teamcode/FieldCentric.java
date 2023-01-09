@@ -11,17 +11,14 @@ public class FieldCentric extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        // TODO: Make sure that the motors have the names assigned that they do here.
         DcMotor leftFront = hardwareMap.dcMotor.get("leftFront");
         DcMotor leftRear = hardwareMap.dcMotor.get("leftRear");
         DcMotor rightFront = hardwareMap.dcMotor.get("rightFront");
         DcMotor rightRear = hardwareMap.dcMotor.get("rightRear");
 
-        // Reverse the right side motors
-        rightFront.setDirection(DcMotorSimple.Direction.REVERSE);
-        rightRear.setDirection(DcMotorSimple.Direction.REVERSE);
+        // Front left wheel is reversed
+        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
 
-        // Retrieve the IMU from the hardware map
         BNO055IMU imu = hardwareMap.get(BNO055IMU.class, "imu");
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
@@ -33,12 +30,10 @@ public class FieldCentric extends LinearOpMode {
 
         while (opModeIsActive()) {
 
-            // Get gamepad sticks
-            double y = -gamepad1.left_stick_y; // Remember, this is reversed!
-            double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
+            double y = -gamepad1.left_stick_y;
+            double x = gamepad1.left_stick_x * 1.1;
             double rx = gamepad1.right_stick_x;
 
-            // TODO: This 'firstangle'. Change it to second, third, etc.
             double botHeading = -imu.getAngularOrientation().firstAngle;
 
             double rotX = x * Math.cos(botHeading) - y * Math.sin(botHeading);
