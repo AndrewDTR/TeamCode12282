@@ -15,11 +15,11 @@ public class ServoTest extends LinearOpMode {
         waitForStart();
         while(opModeIsActive()){
 
-            if(gamepad1.a){
-                tor.setPosition(1.0);
-            }
-            else if(gamepad1.b){
+            if(gamepad1.left_bumper){
                 tor.setPosition(0.5);
+            }
+            else if(gamepad1.right_bumper){
+                tor.setPosition(1.0);
             }
             idle();
         }

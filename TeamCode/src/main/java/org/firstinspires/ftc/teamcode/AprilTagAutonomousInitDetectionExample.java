@@ -19,17 +19,27 @@
  * SOFTWARE.
  */
 
+
 package org.firstinspires.ftc.teamcode;
 
+
+import com.acmerobotics.roadrunner.drive.MecanumDrive;
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
-import org.openftc.easyopencv.OpenCvInternalCamera;
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
 
 import java.util.ArrayList;
 
@@ -60,9 +70,26 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
 
     AprilTagDetection tagOfInterest = null;
 
+
+
     @Override
     public void runOpMode()
     {
+
+        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+
+        Trajectory forward = drive.trajectoryBuilder(new Pose2d())
+                .forward(5)
+                .build();
+
+        Trajectory left = drive.trajectoryBuilder(new Pose2d())
+                .strafeLeft(10)
+                .build();
+
+        Trajectory right = drive.trajectoryBuilder(new Pose2d())
+                .strafeRight(7)
+                .build();
+
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
         aprilTagDetectionPipeline = new org.firstinspires.ftc.teamcode.AprilTagDetectionPipeline(tagsize, fx, fy, cx, cy);
@@ -170,10 +197,15 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
 //        TODO: This
         if(tagOfInterest == null || tagOfInterest.id == LEFT){
             //trajectory
+            drive.followTrajectory(forward);
+            drive.followTrajectory(left);
         }else if(tagOfInterest.id == MIDDLE){
             //trajectory
+            drive.followTrajectory(forward);
         }else{
             //trajectory
+            drive.followTrajectory(forward);
+            drive.followTrajectory(right);
         }
 
 
