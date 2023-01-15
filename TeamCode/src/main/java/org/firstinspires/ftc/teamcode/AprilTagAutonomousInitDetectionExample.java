@@ -27,6 +27,7 @@ import com.acmerobotics.roadrunner.drive.MecanumDrive;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -43,7 +44,7 @@ import com.acmerobotics.roadrunner.trajectory.Trajectory;
 
 import java.util.ArrayList;
 
-@TeleOp
+@Autonomous
 public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
 {
     OpenCvCamera camera;
@@ -78,16 +79,25 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
-        Trajectory forward = drive.trajectoryBuilder(new Pose2d())
-                .forward(5)
+        // Left of the field
+        Pose2d startPose = new Pose2d(60, -36, Math.toRadians(180));
+
+        // Right before cone
+        Pose2d driveToCone = new Pose2d(-20, -22, Math.toRadians(135));
+
+        drive.setPoseEstimate(startPose);
+
+        Trajectory forward = drive.trajectoryBuilder(startPose)
+
+                .forward(28)
                 .build();
 
-        Trajectory left = drive.trajectoryBuilder(new Pose2d())
-                .strafeLeft(10)
+        Trajectory left = drive.trajectoryBuilder(forward.end())
+                .strafeLeft(23)
                 .build();
 
-        Trajectory right = drive.trajectoryBuilder(new Pose2d())
-                .strafeRight(7)
+        Trajectory right = drive.trajectoryBuilder(forward.end())
+                .strafeRight(23)
                 .build();
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
@@ -206,6 +216,7 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
             //trajectory
             drive.followTrajectory(forward);
             drive.followTrajectory(right);
+
         }
 
 

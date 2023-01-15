@@ -80,20 +80,30 @@ public class Twenty23 extends LinearOpMode {
             rightRear.setPower(backRightPower);
 
             // Lift actions
+
+            // Floor
             if (gamepad1.cross) {
                 motorLift.setTargetPosition(0);
             }
-            if (gamepad1.share) {
+            // Low junction
+            if (gamepad1.square) {
+                motorLift.setTargetPosition(-1300);
+            }
+
+            // Middle junction
+            if (gamepad1.triangle) {
+                motorLift.setTargetPosition(-2100);
+            }
+
+            // High junction
+            if (gamepad1.circle) {
                 motorLift.setTargetPosition(-3000);
             }
-            if (gamepad1.circle) {
-                motorLift.setTargetPosition(-1500);
-            }
             if (currentGamepad1.dpad_up && !previousGamepad1.dpad_up) {
-                motorLift.setTargetPosition(motorLift.getTargetPosition()-100);
+                motorLift.setTargetPosition(motorLift.getTargetPosition()-200);
             }
             if (currentGamepad1.dpad_down && !previousGamepad1.dpad_down) {
-                motorLift.setTargetPosition(motorLift.getTargetPosition()+100);
+                motorLift.setTargetPosition(motorLift.getTargetPosition()+200);
             }
 
             // Servo actions
