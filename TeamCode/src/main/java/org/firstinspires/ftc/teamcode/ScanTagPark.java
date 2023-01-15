@@ -28,6 +28,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.openftc.apriltag.AprilTagDetection;
@@ -219,12 +220,39 @@ public class ScanTagPark extends LinearOpMode
 
     void tagToTelemetry(AprilTagDetection detection)
     {
+        telemetry.setDisplayFormat(Telemetry.DisplayFormat.HTML);
         telemetry.addLine(String.format("\nDetected tag ID=%d", detection.id));
-        telemetry.addLine(String.format("Translation X: %.2f feet", detection.pose.x*FEET_PER_METER));
-        telemetry.addLine(String.format("Translation Y: %.2f feet", detection.pose.y*FEET_PER_METER));
-        telemetry.addLine(String.format("Translation Z: %.2f feet", detection.pose.z*FEET_PER_METER));
-        telemetry.addLine(String.format("Rotation Yaw: %.2f degrees", Math.toDegrees(detection.pose.yaw)));
-        telemetry.addLine(String.format("Rotation Pitch: %.2f degrees", Math.toDegrees(detection.pose.pitch)));
-        telemetry.addLine(String.format("Rotation Roll: %.2f degrees", Math.toDegrees(detection.pose.roll)));
+        if(tagOfInterest == null || tagOfInterest.id == LEFT){
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'      .'</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'  .;;............'</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'.;;;;::::::::::::'</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>' ':;;::::::::::::'</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'   ':'</p>");
+        }else if(tagOfInterest.id == MIDDLE){
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'     .'</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'   .:;:.'</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>' .:;;;;;:.'</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'   ;;;;;'</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'   ;;;;;'</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'   ;;;;;'</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'   ;;;;;'</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'   ;;;;;'</p>");
+        }else if (tagOfInterest.id == RIGHT) {
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'          .'</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'..........;;.'</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'::::::::::;;;;.'</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'::::::::::;;:''</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'          :''</p>");
+        } else {
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'  _____  '</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>' / ___ \\ '</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'( (   ) )'</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>' \\/  / / '</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'    ( (  '</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'    | |  '</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'    (_)  '</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'     _   '</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'    (_)  '</p>");
+        }
     }
 }

@@ -79,6 +79,8 @@ public class Twenty23 extends LinearOpMode {
             rightFront.setPower(frontRightPower);
             rightRear.setPower(backRightPower);
 
+            telemetry.addLine("TeleOp is running!");
+
             // Lift actions
 
             // Floor
@@ -106,17 +108,22 @@ public class Twenty23 extends LinearOpMode {
                 motorLift.setTargetPosition(motorLift.getTargetPosition()+200);
             }
 
+            telemetry.addData("Lift Height", motorLift.getCurrentPosition());
+            telemetry.addData("Lift Target", motorLift.getTargetPosition());
+
             // Servo actions
             if(gamepad1.left_bumper){
                 tor.setPosition(0.5);
+                telemetry.addData("Servo Status", "closed");
             }
             if(gamepad1.right_bumper){
                 tor.setPosition(1.0);
                 gamepad1.rumble(0.2, 0, 200);  // 200 mSec burst on left motor.
+                telemetry.addData("Servo Status", "open");
             }
 
-            telemetry.addLine("TeleOp is running!");
-            telemetry.addData("Lift Height", motorLift.getCurrentPosition());
+
+
             telemetry.update();
         }
     }
