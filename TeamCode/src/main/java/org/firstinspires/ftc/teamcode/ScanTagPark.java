@@ -42,7 +42,7 @@ import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import java.util.ArrayList;
 
 @Autonomous
-public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
+public class ScanTagPark extends LinearOpMode
 {
     // Setting variables and tags, etc.
     OpenCvCamera camera;
