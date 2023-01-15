@@ -18,10 +18,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-
 package org.firstinspires.ftc.teamcode;
-
 
 import com.acmerobotics.roadrunner.drive.MecanumDrive;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
@@ -47,6 +44,7 @@ import java.util.ArrayList;
 @Autonomous
 public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
 {
+    // Setting variables and tags, etc.
     OpenCvCamera camera;
     public org.firstinspires.ftc.teamcode.AprilTagDetectionPipeline aprilTagDetectionPipeline;
 
@@ -70,8 +68,6 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
     int RIGHT = 3;
 
     AprilTagDetection tagOfInterest = null;
-
-
 
     @Override
     public void runOpMode()
@@ -206,14 +202,11 @@ public class AprilTagAutonomousInitDetectionExample extends LinearOpMode
         /* Actually do something useful */
 //        TODO: This
         if(tagOfInterest == null || tagOfInterest.id == LEFT){
-            //trajectory
             drive.followTrajectory(forward);
             drive.followTrajectory(left);
         }else if(tagOfInterest.id == MIDDLE){
-            //trajectory
             drive.followTrajectory(forward);
         }else{
-            //trajectory
             drive.followTrajectory(forward);
             drive.followTrajectory(right);
 
