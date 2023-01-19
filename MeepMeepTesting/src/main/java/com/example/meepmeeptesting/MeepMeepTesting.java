@@ -18,31 +18,32 @@ public class MeepMeepTesting {
                 .setColorScheme(new ColorSchemeRedDark())
                 .setConstraints(30, 30, Math.toRadians(180), Math.toRadians(180), 15)
                 .followTrajectorySequence(drive ->
+                        // Start here
                         drive.trajectorySequenceBuilder(new Pose2d(35, -60, Math.toRadians(90)))
+                                // Line up, go 1
                                 .splineToSplineHeading(new Pose2d(35.00, -12.50, Math.toRadians(130.00)), Math.toRadians(90.00))
                                 .forward(10)
-                                .waitSeconds(2)
+                                .waitSeconds(1)
+                                // Return
                                 .back(10)
+                                // Go to cone stack
                                 .lineToLinearHeading(new Pose2d(55, -12, Math.toRadians(0)))
                                 .forward(5)
-                                .waitSeconds(1)
+                                .waitSeconds(0.5)
                                 .back(5)
                                 .lineToLinearHeading(new Pose2d(35.00, -12.50, Math.toRadians(130.00)))
                                 .forward(10)
-                                .waitSeconds(2)
+                                .waitSeconds(1)
                                 .back(10)
                                 .lineToLinearHeading(new Pose2d(55, -12, Math.toRadians(0)))
                                 .forward(5)
-                                .waitSeconds(1)
+                                .waitSeconds(0.5)
                                 .back(5)
                                 .lineToLinearHeading(new Pose2d(35.00, -12.50, Math.toRadians(130.00)))
                                 .forward(10)
-                                .waitSeconds(2)
-
-
-
-
-
+                                .waitSeconds(1)
+                                .back(8)
+                                .lineToLinearHeading(new Pose2d(12.00, -10.50, Math.toRadians(90.00)))
                                 .build()
                 );
 
