@@ -12,16 +12,34 @@ public class MeepMeepTesting {
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(800);
 
-//        Pose2d startPose = new Pose2d(60, -36, Math.toRadians(180));
 
-        // Declare out second bot
         RoadRunnerBotEntity mySecondBot = new DefaultBotBuilder(meepMeep)
                 // We set this bot to be red
                 .setColorScheme(new ColorSchemeRedDark())
                 .setConstraints(30, 30, Math.toRadians(180), Math.toRadians(180), 15)
                 .followTrajectorySequence(drive ->
                         drive.trajectorySequenceBuilder(new Pose2d(35, -60, Math.toRadians(90)))
-                                .splineTo(new Vector2d(27.23, -4.12), Math.toRadians(121.88))
+                                .splineToSplineHeading(new Pose2d(35.00, -12.50, Math.toRadians(130.00)), Math.toRadians(90.00))
+                                .forward(10)
+                                .waitSeconds(2)
+                                .back(10)
+                                .lineToLinearHeading(new Pose2d(55, -12, Math.toRadians(0)))
+                                .forward(5)
+                                .waitSeconds(1)
+                                .back(5)
+                                .lineToLinearHeading(new Pose2d(35.00, -12.50, Math.toRadians(130.00)))
+                                .forward(10)
+                                .waitSeconds(2)
+                                .back(10)
+                                .lineToLinearHeading(new Pose2d(55, -12, Math.toRadians(0)))
+                                .forward(5)
+                                .waitSeconds(1)
+                                .back(5)
+                                .lineToLinearHeading(new Pose2d(35.00, -12.50, Math.toRadians(130.00)))
+                                .forward(10)
+                                .waitSeconds(2)
+
+
 
 
 

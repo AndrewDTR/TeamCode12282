@@ -20,7 +20,6 @@
  */
 package org.firstinspires.ftc.teamcode;
 
-import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.roadrunner.drive.MecanumDrive;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
@@ -44,14 +43,11 @@ import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import java.util.ArrayList;
 
 @Autonomous
-public class AprilTagDesktop extends LinearOpMode
+public class OnePlusZero extends LinearOpMode
 {
     // Setting variables and tags, etc.
     OpenCvCamera camera;
     public org.firstinspires.ftc.teamcode.AprilTagDetectionPipeline aprilTagDetectionPipeline;
-
-    FtcDashboard dashboard = FtcDashboard.getInstance();
-    Telemetry dashboardTelemetry = dashboard.getTelemetry();
 
     static final double FEET_PER_METER = 3.28084;
 
@@ -147,20 +143,20 @@ public class AprilTagDesktop extends LinearOpMode
 
                 if(tagFound)
                 {
-                    dashboardTelemetry.addLine("Tag of interest is in sight!\n\nLocation data:");
+                    telemetry.addLine("Tag of interest is in sight!\n\nLocation data:");
                     tagToTelemetry(tagOfInterest);
                 }
                 else
                 {
-                    dashboardTelemetry.addLine("Don't see tag of interest :(");
+                    telemetry.addLine("Don't see tag of interest :(");
 
                     if(tagOfInterest == null)
                     {
-                        dashboardTelemetry.addLine("(The tag has never been seen)");
+                        telemetry.addLine("(The tag has never been seen)");
                     }
                     else
                     {
-                        dashboardTelemetry.addLine("\nBut we HAVE seen the tag before; last seen at:");
+                        telemetry.addLine("\nBut we HAVE seen the tag before; last seen at:");
                         tagToTelemetry(tagOfInterest);
                     }
                 }
@@ -168,21 +164,21 @@ public class AprilTagDesktop extends LinearOpMode
             }
             else
             {
-                dashboardTelemetry.addLine("Don't see tag of interest :(");
+                telemetry.addLine("Don't see tag of interest :(");
 
                 if(tagOfInterest == null)
                 {
-                    dashboardTelemetry.addLine("(The tag has never been seen)");
+                    telemetry.addLine("(The tag has never been seen)");
                 }
                 else
                 {
-                    dashboardTelemetry.addLine("\nBut we HAVE seen the tag before; last seen at:");
+                    telemetry.addLine("\nBut we HAVE seen the tag before; last seen at:");
                     tagToTelemetry(tagOfInterest);
                 }
 
             }
 
-            dashboardTelemetry.update();
+            telemetry.update();
             sleep(20);
         }
 
@@ -194,14 +190,14 @@ public class AprilTagDesktop extends LinearOpMode
         /* Update the telemetry */
         if(tagOfInterest != null)
         {
-            dashboardTelemetry.addLine("Tag snapshot:\n");
+            telemetry.addLine("Tag snapshot:\n");
             tagToTelemetry(tagOfInterest);
-            dashboardTelemetry.update();
+            telemetry.update();
         }
         else
         {
-            dashboardTelemetry.addLine("No tag snapshot available, it was never sighted during the init loop :(");
-            dashboardTelemetry.update();
+            telemetry.addLine("No tag snapshot available, it was never sighted during the init loop :(");
+            telemetry.update();
         }
 
         /* Actually do something useful */
@@ -224,39 +220,39 @@ public class AprilTagDesktop extends LinearOpMode
 
     void tagToTelemetry(AprilTagDetection detection)
     {
-        dashboardTelemetry.setDisplayFormat(Telemetry.DisplayFormat.HTML);
-        dashboardTelemetry.addLine(String.format("\nDetected tag ID=%d", detection.id));
+        telemetry.setDisplayFormat(Telemetry.DisplayFormat.HTML);
+        telemetry.addLine(String.format("\nDetected tag ID=%d", detection.id));
         if(tagOfInterest == null || tagOfInterest.id == LEFT){
-            dashboardTelemetry.addLine("<p style=color:rgb(0,255,0);>'      .'</p>");
-            dashboardTelemetry.addLine("<p style=color:rgb(0,255,0);>'  .;;............'</p>");
-            dashboardTelemetry.addLine("<p style=color:rgb(0,255,0);>'.;;;;::::::::::::'</p>");
-            dashboardTelemetry.addLine("<p style=color:rgb(0,255,0);>' ':;;::::::::::::'</p>");
-            dashboardTelemetry.addLine("<p style=color:rgb(0,255,0);>'   ':'</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'      .'</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'  .;;............'</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'.;;;;::::::::::::'</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>' ':;;::::::::::::'</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'   ':'</p>");
         }else if(tagOfInterest.id == MIDDLE){
-            dashboardTelemetry.addLine("<p style=color:rgb(0,255,0);>'     .'</p>");
-            dashboardTelemetry.addLine("<p style=color:rgb(0,255,0);>'   .:;:.'</p>");
-            dashboardTelemetry.addLine("<p style=color:rgb(0,255,0);>' .:;;;;;:.'</p>");
-            dashboardTelemetry.addLine("<p style=color:rgb(0,255,0);>'   ;;;;;'</p>");
-            dashboardTelemetry.addLine("<p style=color:rgb(0,255,0);>'   ;;;;;'</p>");
-            dashboardTelemetry.addLine("<p style=color:rgb(0,255,0);>'   ;;;;;'</p>");
-            dashboardTelemetry.addLine("<p style=color:rgb(0,255,0);>'   ;;;;;'</p>");
-            dashboardTelemetry.addLine("<p style=color:rgb(0,255,0);>'   ;;;;;'</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'     .'</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'   .:;:.'</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>' .:;;;;;:.'</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'   ;;;;;'</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'   ;;;;;'</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'   ;;;;;'</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'   ;;;;;'</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'   ;;;;;'</p>");
         }else if (tagOfInterest.id == RIGHT) {
-            dashboardTelemetry.addLine("<p style=color:rgb(0,255,0);>'          .'</p>");
-            dashboardTelemetry.addLine("<p style=color:rgb(0,255,0);>'..........;;.'</p>");
-            dashboardTelemetry.addLine("<p style=color:rgb(0,255,0);>'::::::::::;;;;.'</p>");
-            dashboardTelemetry.addLine("<p style=color:rgb(0,255,0);>'::::::::::;;:''</p>");
-            dashboardTelemetry.addLine("<p style=color:rgb(0,255,0);>'          :''</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'          .'</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'..........;;.'</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'::::::::::;;;;.'</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'::::::::::;;:''</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'          :''</p>");
         } else {
-            dashboardTelemetry.addLine("<p style=color:rgb(0,255,0);>'  _____  '</p>");
-            dashboardTelemetry.addLine("<p style=color:rgb(0,255,0);>' / ___ \\ '</p>");
-            dashboardTelemetry.addLine("<p style=color:rgb(0,255,0);>'( (   ) )'</p>");
-            dashboardTelemetry.addLine("<p style=color:rgb(0,255,0);>' \\/  / / '</p>");
-            dashboardTelemetry.addLine("<p style=color:rgb(0,255,0);>'    ( (  '</p>");
-            dashboardTelemetry.addLine("<p style=color:rgb(0,255,0);>'    | |  '</p>");
-            dashboardTelemetry.addLine("<p style=color:rgb(0,255,0);>'    (_)  '</p>");
-            dashboardTelemetry.addLine("<p style=color:rgb(0,255,0);>'     _   '</p>");
-            dashboardTelemetry.addLine("<p style=color:rgb(0,255,0);>'    (_)  '</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'  _____  '</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>' / ___ \\ '</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'( (   ) )'</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>' \\/  / / '</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'    ( (  '</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'    | |  '</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'    (_)  '</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'     _   '</p>");
+            telemetry.addLine("<p style=color:rgb(0,255,0);>'    (_)  '</p>");
         }
     }
 }
