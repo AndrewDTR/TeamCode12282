@@ -43,7 +43,7 @@ public class Twenty23 extends LinearOpMode {
 
         waitForStart();
 
-        // Set lift to max speed
+        // Set lift to max speed, targetted to zero (where it should be already)
         motorLift.setPower(1);
         motorLift.setTargetPosition(0);
 
@@ -114,7 +114,7 @@ public class Twenty23 extends LinearOpMode {
             // Servo actions
             if(gamepad1.left_bumper){
                 // If the position is higher than, like, 500 ticks, we can do this. If not, no real point
-                if(motorLift.getCurrentPosition() > 500) {
+                if(motorLift.getCurrentPosition() < -500) {
                     motorLift.setTargetPosition(motorLift.getTargetPosition() - 400);
                     tor.setPosition(0.5);
                 }
