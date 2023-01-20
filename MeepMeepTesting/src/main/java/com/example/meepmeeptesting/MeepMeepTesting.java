@@ -16,37 +16,45 @@ public class MeepMeepTesting {
         RoadRunnerBotEntity mySecondBot = new DefaultBotBuilder(meepMeep)
                 // We set this bot to be red
                 .setColorScheme(new ColorSchemeRedDark())
-                .setConstraints(40, 40, Math.toRadians(180), Math.toRadians(180), 15)
+                .setConstraints(35, 35, Math.toRadians(180), Math.toRadians(180), 15)
                 .followTrajectorySequence(drive ->
                         // Start here
                         drive.trajectorySequenceBuilder(new Pose2d(35, -60, Math.toRadians(90)))
-
-                                // Line up, go 1
+                                //
+                                // Get to the pole, 1+
+                                //
                                 .splineToSplineHeading(new Pose2d(35.00, -20.50, Math.toRadians(90)), Math.toRadians(90.00))
-                                .splineToSplineHeading(new Pose2d(35.00, -12.50, Math.toRadians(130.00)), Math.toRadians(90.00))
-                                .forward(10)
-                                .waitSeconds(1)
-                                // Return
-                                .back(10)
-                                // Go to cone stack
-                                .lineToLinearHeading(new Pose2d(50, -12, Math.toRadians(90)))
-                                .lineToLinearHeading(new Pose2d(55, -12, Math.toRadians(0)))
-                                .forward(5)
-                                .waitSeconds(0.5)
-                                .back(5)
-                                .lineToLinearHeading(new Pose2d(35.00, -12.50, Math.toRadians(130.00)))
-                                .forward(10)
-                                .waitSeconds(1)
-                                .back(10)
-                                .lineToLinearHeading(new Pose2d(55, -12, Math.toRadians(0)))
-                                .forward(5)
-                                .waitSeconds(0.5)
-                                .back(5)
-                                .lineToLinearHeading(new Pose2d(35.00, -12.50, Math.toRadians(130.00)))
+                                .splineToSplineHeading(new Pose2d(35.00, -13.50, Math.toRadians(130.00)), Math.toRadians(90.00))
                                 .forward(10)
                                 .waitSeconds(1)
                                 .back(8)
-                                .lineToLinearHeading(new Pose2d(12.00, -10.50, Math.toRadians(90.00)))
+                                .turn(Math.toRadians(-130))
+                                //
+                                // Go for 1+1
+                                //
+                                .forward(26)
+                                .waitSeconds(1)
+                                .back(26)
+                                .turn(Math.toRadians(130))
+                                //
+                                // Score for 1+1
+                                //
+                                .forward(8)
+                                .waitSeconds(1)
+                                .back(8)
+                                .turn(Math.toRadians(-130))
+                                //
+                                // Go for 1+2
+                                //
+                                .forward(26)
+                                .waitSeconds(1)
+                                .back(26)
+                                .turn(Math.toRadians(130))
+                                //
+                                // Score for 1+2
+                                //
+                                .forward(9)
+                                .waitSeconds(1)
                                 .build()
                 );
 
