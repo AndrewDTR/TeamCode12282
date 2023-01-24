@@ -14,7 +14,7 @@ public class MeepMeepTesting {
 
 
         RoadRunnerBotEntity mySecondBot = new DefaultBotBuilder(meepMeep)
-                // We set this bot to be red
+                // make the robot have the same constraints as the physical one yippee
                 .setColorScheme(new ColorSchemeRedDark())
                 .setConstraints(35, 35, Math.toRadians(180), Math.toRadians(180), 15)
                 .followTrajectorySequence(drive ->
