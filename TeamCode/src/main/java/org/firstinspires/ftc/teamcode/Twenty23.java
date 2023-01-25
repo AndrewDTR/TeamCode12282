@@ -112,7 +112,7 @@ public class Twenty23 extends LinearOpMode {
             telemetry.addData("Lift Target", motorLift.getTargetPosition());
 
             // Servo actions
-            if(gamepad1.left_bumper){
+            if(gamepad1.left_bumper && !previousGamepad1.left_bumper){
                 // If the position is higher than, like, 500 ticks, we can do this. If not, no real point
                 if(motorLift.getCurrentPosition() < -500) {
                     motorLift.setTargetPosition(motorLift.getTargetPosition() + 400);

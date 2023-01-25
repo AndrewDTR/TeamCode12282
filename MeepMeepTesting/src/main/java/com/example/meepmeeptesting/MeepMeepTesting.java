@@ -20,11 +20,14 @@ public class MeepMeepTesting {
                 .followTrajectorySequence(drive ->
                         // Start here
                         drive.trajectorySequenceBuilder(new Pose2d(35, -60, Math.toRadians(90)))
+
                                 //
                                 // Get to the pole, 1+
                                 //
                                 .splineToSplineHeading(new Pose2d(35.00, -20.50, Math.toRadians(90)), Math.toRadians(90.00))
                                 .splineToSplineHeading(new Pose2d(35.00, -13.50, Math.toRadians(130.00)), Math.toRadians(90.00))
+                                // TODO: This "2"
+                                .strafeRight(2)
                                 .forward(10)
                                 .waitSeconds(1)
                                 .back(8)
