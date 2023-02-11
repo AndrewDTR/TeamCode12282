@@ -16,48 +16,32 @@ public class MeepMeepTesting {
         RoadRunnerBotEntity mySecondBot = new DefaultBotBuilder(meepMeep)
                 // make the robot have the same constraints as the physical one yippee
                 .setColorScheme(new ColorSchemeRedDark())
-                .setConstraints(35, 35, Math.toRadians(180), Math.toRadians(180), 15)
+                .setConstraints(35, 35, Math.toRadians(120), Math.toRadians(120), 5)
                 .followTrajectorySequence(drive ->
                         // Start here
                         drive.trajectorySequenceBuilder(new Pose2d(35, -60, Math.toRadians(90)))
-
-                                //
-                                // Get to the pole, 1+
-                                //
-                                .splineToSplineHeading(new Pose2d(35.00, -20.50, Math.toRadians(90)), Math.toRadians(90.00))
-                                .splineToSplineHeading(new Pose2d(35.00, -13.50, Math.toRadians(130.00)), Math.toRadians(90.00))
-                                // TODO: This "2"
-                                .strafeRight(2)
+                                .forward(48)
+                                .strafeLeft(11.5)
                                 .forward(10)
                                 .waitSeconds(1)
-                                .back(8)
-                                .turn(Math.toRadians(-130))
-                                //
-                                // Go for 1+1
-                                //
-                                .forward(26)
+                                .back(9)
+                                .lineToLinearHeading(new Pose2d(50, -12, Math.toRadians(0)))
+                                .forward(12)
                                 .waitSeconds(1)
-                                .back(26)
-                                .turn(Math.toRadians(130))
-                                //
-                                // Score for 1+1
-                                //
-                                .forward(8)
+                                .lineToLinearHeading(new Pose2d(24, -8, Math.toRadians(90)))
                                 .waitSeconds(1)
-                                .back(8)
-                                .turn(Math.toRadians(-130))
-                                //
-                                // Go for 1+2
-                                //
-                                .forward(26)
+                                .lineToLinearHeading(new Pose2d(50, -12, Math.toRadians(0)))
+                                .forward(12)
                                 .waitSeconds(1)
-                                .back(26)
-                                .turn(Math.toRadians(130))
-                                //
-                                // Score for 1+2
-                                //
-                                .forward(9)
+                                .lineToLinearHeading(new Pose2d(24, -8, Math.toRadians(90)))
                                 .waitSeconds(1)
+                                .lineToLinearHeading(new Pose2d(50, -12, Math.toRadians(0)))
+                                .forward(12)
+                                .waitSeconds(1)
+                                .lineToLinearHeading(new Pose2d(24, -8, Math.toRadians(90)))
+                                .waitSeconds(1)
+
+
                                 .build()
                 );
 

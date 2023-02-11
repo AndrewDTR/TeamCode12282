@@ -35,6 +35,7 @@ public class Twenty23 extends LinearOpMode {
 
         // Front left wheel is reversed
         leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftRear.setDirection(DcMotorSimple.Direction.REVERSE);
 
         BNO055IMU imu = hardwareMap.get(BNO055IMU.class, "imu");
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
@@ -84,21 +85,21 @@ public class Twenty23 extends LinearOpMode {
             // Lift actions
 
             // Floor
-            if (gamepad1.cross) {
+            if (currentGamepad1.cross) {
                 motorLift.setTargetPosition(0);
             }
             // Low junction
-            if (gamepad1.square) {
+            if (currentGamepad1.square) {
                 motorLift.setTargetPosition(-1300);
             }
 
             // Middle junction
-            if (gamepad1.triangle) {
+            if (currentGamepad1.triangle) {
                 motorLift.setTargetPosition(-2100);
             }
 
             // High junction
-            if (gamepad1.circle) {
+            if (currentGamepad1.circle) {
                 motorLift.setTargetPosition(-3000);
             }
             if (currentGamepad1.dpad_up && !previousGamepad1.dpad_up) {
