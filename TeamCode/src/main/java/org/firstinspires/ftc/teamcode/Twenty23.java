@@ -133,6 +133,15 @@ public class Twenty23 extends LinearOpMode {
                 telemetry.addData("Servo Status", "open");
             }
 
+            if(gamepad1.left_trigger > 0.5 && motorLift.getCurrentPosition() < -500) {
+
+                motorLift.setTargetPosition(motorLift.getTargetPosition() + 10);
+
+
+            }
+
+
+
 
 
             telemetry.update();

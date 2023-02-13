@@ -40,17 +40,22 @@ import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.acmerobotics.roadrunner.trajectory.Trajectory;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import java.util.ArrayList;
 
 @Autonomous
-public class ScanTagPark extends LinearOpMode
+public class OneCone extends LinearOpMode
 {
     // Setting variables and tags, etc.
     OpenCvCamera camera;
     public org.firstinspires.ftc.teamcode.AprilTagDetectionPipeline aprilTagDetectionPipeline;
 
     static final double FEET_PER_METER = 3.28084;
+
+
 
     // Lens intrinsics
     // UNITS ARE PIXELS
@@ -64,7 +69,7 @@ public class ScanTagPark extends LinearOpMode
     // UNITS ARE METERS
     double tagsize = 0.166;
 
-     // Tag ID 1,2,3 from the 36h11 family
+    // Tag ID 1,2,3 from the 36h11 family
     int LEFT = 1;
     int MIDDLE = 2;
     int RIGHT = 3;
@@ -75,16 +80,20 @@ public class ScanTagPark extends LinearOpMode
     public void runOpMode()
     {
 
+        Servo tor;
+        tor = hardwareMap.servo.get("tor");
+
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         // Left of the field
         Pose2d startPose = new Pose2d(60, -36, Math.toRadians(180));
 
-
         // Right before cone
         Pose2d driveToCone = new Pose2d(-20, -22, Math.toRadians(135));
 
-        drive.setPoseEstimate(startPose);
+        Pose2d derp = new Pose2d(35, -60, Math.toRadians(90));
+
+        drive.setPoseEstimate(derp);
 
         Trajectory forward = drive.trajectoryBuilder(startPose)
 
@@ -99,7 +108,53 @@ public class ScanTagPark extends LinearOpMode
                 .strafeRight(23)
                 .build();
 
+        DcMotorEx motorLift;
+        motorLift = hardwareMap.get(DcMotorEx.class, "lift");
 
+        motorLift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        motorLift.setPower(1);
+        motorLift.setTargetPosition(0);
+
+        // Set motor to RUN_TO_POSITION, after resetting on line 28
+        motorLift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        TrajectorySequence toJunc = drive.trajectorySequenceBuilder(new Pose2d(35, -60, Math.toRadians(90)))
+                .lineToLinearHeading(new Pose2d(35, -12, Math.toRadians(135)))
+                .UNSTABLE_addTemporalMarkerOffset(-2.5, () -> {motorLift.setTargetPosition(-3000);})
+                .forward(9.15)
+                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> {tor.setPosition(0.5);})
+                .waitSeconds(1)
+                .back(9.15)
+                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> {motorLift.setTargetPosition(-400);})
+                .lineToLinearHeading(new Pose2d(59, -11.5, Math.toRadians(0)))
+                .UNSTABLE_addTemporalMarkerOffset(0.25, () -> {tor.setPosition(1);})
+                .waitSeconds(1)
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {motorLift.setTargetPosition(-3000);})
+                .lineToLinearHeading(new Pose2d(35, -12, Math.toRadians(135)))
+                .forward(9.32)
+                .UNSTABLE_addTemporalMarkerOffset(0.5, () -> {tor.setPosition(0.5);})
+                .UNSTABLE_addTemporalMarkerOffset(0, () -> {motorLift.setTargetPosition(0);})
+                .waitSeconds(1)
+                .back(9.5)
+                .build();
+
+        TrajectorySequence toRight = drive.trajectorySequenceBuilder(toJunc.end())
+                .turn(Math.toRadians(-45))
+                .strafeRight(23)
+                .build();
+
+        TrajectorySequence toLeft = drive.trajectorySequenceBuilder(toJunc.end())
+                .turn(Math.toRadians(-45))
+                .strafeLeft(23)
+                .build();
+
+        TrajectorySequence toJustRotate = drive.trajectorySequenceBuilder(toJunc.end())
+                .turn(Math.toRadians(-45))
+
+                .build();
+
+        tor.setPosition(1);
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
@@ -207,13 +262,14 @@ public class ScanTagPark extends LinearOpMode
         /* Actually do something useful */
 //        TODO: This
         if(tagOfInterest == null || tagOfInterest.id == LEFT){
-            drive.followTrajectory(forward);
-            drive.followTrajectory(left);
+            drive.followTrajectorySequence(toJunc);
+            drive.followTrajectorySequence(toLeft);
         }else if(tagOfInterest.id == MIDDLE){
-            drive.followTrajectory(forward);
+            drive.followTrajectorySequence(toJunc);
+            drive.followTrajectorySequence(toJustRotate);
         }else{
-            drive.followTrajectory(forward);
-            drive.followTrajectory(right);
+            drive.followTrajectorySequence(toRight);
+
 
         }
 
